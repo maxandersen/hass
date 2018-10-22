@@ -5,8 +5,9 @@ services:
       image: homeassistant/home-assistant
       volumes:
         - ./config:/config
+        - /etc/localtime:/etc/localtime:ro
       restart: always
       network_mode: host
-      environment:
-        - TZ=Europe/Zurich
+#      environment:
+#        - TZ=Europe/Zurich
 
