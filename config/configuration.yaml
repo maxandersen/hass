@@ -78,9 +78,17 @@ ring:
 binary_sensor:
    - platform: ring
 
+lock:
+  - platform: nuki
+    host: 192.168.1.115
+    token: !secret nuki-token
 
 camera:
    - platform: ring
+   - platform: mjpeg
+     name: babymonitor
+     mjpeg_url: !secret baby-mjpeg_url
+     still_image_url: !secret baby-still_image_url
 
 group: !include groups.yaml
 automation: !include automations.yaml
