@@ -14,7 +14,7 @@ homeassistant:
   customize: !include customize.yaml
 
 # Show links to resources in log and frontend
-introduction:
+# introduction:
 
 # Enables the frontend
 frontend:
@@ -80,6 +80,8 @@ cloud:
 
 device_tracker:
   - platform: swisscom
+    new_device_defaults:
+      track_new_devices: false
 
 ring:
    username: !secret ring-username
