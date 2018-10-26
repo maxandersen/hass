@@ -19,6 +19,8 @@ homeassistant:
 # Enables the frontend
 frontend:
 
+homekit:
+
 vacuum:
   - platform: xiaomi_miio
     host: 192.168.1.118
