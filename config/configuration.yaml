@@ -83,6 +83,8 @@ sensor:
   - platform: hue
     ip_address: 192.168.1.101
     token: !secret hue-token
+  - platform: aftership
+    api_key: !secret aftership-key
 
 # Text to speech
 tts:
