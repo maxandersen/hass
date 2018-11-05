@@ -21,7 +21,7 @@ frontend:
 
 # Example using a delay after start of Home Assistant
 homekit:
-  auto_start: False
+  auto_start: True
 
 vacuum:
   - platform: xiaomi_miio
@@ -32,8 +32,11 @@ vacuum:
 config:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-# http:
-#   base_url: example.duckdns.org:8123
+http:
+  base_url: !secret http-base_url
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  ssl_profile: intermediate
 
 ios:
 
