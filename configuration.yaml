@@ -23,15 +23,6 @@ frontend:
 homekit:
   auto_start: False
 
-automation:
-  - alias: 'Start HomeKit'
-    trigger:
-      - platform: homeassistant
-        event: start
-    action:
-      - delay: 00:05  # Waits 5 minutes
-      - service: homekit.start
-
 vacuum:
   - platform: xiaomi_miio
     host: 192.168.1.118
