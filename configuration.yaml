@@ -63,7 +63,7 @@ ffmpeg:
 
 # View all events in a logbook
 logbook:
-
+ 
 # Enables a map showing the location of tracked devices
 map:
 
@@ -74,9 +74,6 @@ sun:
 sensor:
   - platform: yr
   - platform: ring
-  - platform: hue
-    ip_address: 192.168.1.101
-    token: !secret hue-token
   - platform: aftership
     api_key: !secret aftership-api_key
 
@@ -99,10 +96,10 @@ ring:
 binary_sensor:
    - platform: ring
 
-lock:
-  - platform: nuki
-    host: 192.168.1.115
-    token: !secret nuki-token
+#lock:
+#  - platform: nuki
+#    host: 192.168.1.115
+#    token: !secret nuki-token
 
 camera:
    - platform: ring
@@ -110,6 +107,15 @@ camera:
      name: babymonitor
      mjpeg_url: !secret baby-mjpeg_url
      still_image_url: !secret baby-still_image_url
+
+shell_command:
+  lovelace_gen: 'python /config/lovelace-gen.py'
+
+  # logger:
+  #   default: info
+  #   logs:
+  #     pydeconz: debug
+  #     homeassistant.components.deconz: debug
 
 group: !include groups.yaml
 automation: !include automations.yaml

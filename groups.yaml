@@ -1,31 +1,13 @@
 kitchen:
   name: Kitchen
   entities:
-    - sensor.kitchen_main_dimmer
-    - sensor.kitchen_motion_sensor
-    - light.kitchen
-    - light.kitchen_front_right_at_fridge
-    - light.kitchen_left_back_at_bar
-    - light.kitchen_left_back_at_hub
-    - light.kitchen_left_middle_at_window
-    - light.kitchen_right_back_at_sink
-    - light.kitchen_right_middle_at_oven
     - media_player.kitchen
     - sensor.kitchen_motion_sensor
 
 dinner_table:
   name: Dinner Table
   entities:
-    - light.dinner_table
-    - light.dinner_table_1
-    - light.dinner_table_2
-    - light.dinner_table_3
-    - light.dinner_table_4
-    - light.dinner_table_5
-    - light.dinner_table_6
     - media_player.kitchen
-    - sensor.dinner_table_motion_motion
-    - sensor.dinner_table_switch
     - vacuum.xiaomi_vacuum_cleaner
 
 bedroom:
@@ -39,23 +21,23 @@ living_room:
     - media_player.fireplace
     - media_player.living_room_2
 
-guest_room:
-  name: Guest Room
-  entities:
-     - light.guest_room
+#guest_room:
+#  name: Guest Room
+#  entities:
+#     - light.guest_room
 
-hall_upstairs:
-  name: Hall Upstairs
-  entities:
-    - light.hall
+#hall_upstairs:
+#  name: Hall Upstairs
+#  entities:
+#    - light.hall
 
-kids_room:
-  name: Kids room
-  entities:
-    - light.kids_room
-    - light.kids_room_window
-    - light.kids_room_main
-    - media_player.legevrelse
+#kids_room:
+#  name: Kids room
+#  entities:
+#    - light.kids_room
+#    - light.kids_room_window
+#    - light.kids_room_main
+#    - media_player.legevrelse
 
 
 basement:
@@ -66,22 +48,13 @@ basement:
 office:
   name: Max's office
   entities:
-    - light.office
     - media_player.max_office
-    - sensor.office_dimmer
-    - sensor.office_motion_sensor
 
 
 winter_garden:
   name: Winter Garden
   entities:
     - media_player.winter_garden
-    - light.winter_garden
-    - light.winter_garden_1
-    - light.winter_garden_2
-    - light.winter_garden_3
-    - light.winter_garden_4
-    - light.winter_garden_5
 
 big_bathroom:
   name: Bathroom Upstairs

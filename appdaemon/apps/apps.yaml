@@ -1,0 +1,36 @@
+---
+deconz_helper:
+  module: deconz_helper
+  class: DeconzHelper
+
+motion_lights_dinner_table:
+  module: motion_lights
+  class: MotionLights
+  sensor: binary_sensor.presence_12
+  entity_on: light.dinner_table
+  entity_off: light.dinner_table
+  delay: 600
+  
+motion_lights_hallway:
+  module: motion_lights
+  class: MotionLights
+  sensor: binary_sensor.presence_6
+  entity_on: light.hallway, light.small_bathroom
+  entity_off: light.hallway, light.small_bathroom
+  delay: 600
+
+motion_lights_kitchen:
+  module: motion_lights
+  class: MotionLights
+  sensor: binary_sensor.kitchen_motion
+  entity_on: light.kitchen
+  entity_off: light.kitchen
+  
+motion_lights_wintergarden:
+  module: motion_lights
+  class: MotionLights
+  sensor: binary_sensor.presence_15
+  entity_on: light.winter_garden
+  entity_of: light.kitchen, light.winter_garden
+  
+    
