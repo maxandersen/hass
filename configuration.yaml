@@ -13,8 +13,18 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
-# Show links to resources in log and frontend
-# introduction:
+zone:
+  - name: School
+    latitude: !secret school-latitude
+    longitude: !secret school-longitude
+    radius: 50
+    icon: mdi:school
+
+  - name: Home
+    latitude: !secret latitude
+    longitude: !secret longitude
+    radius: 50
+    icon: mdi:home
 
 # Enables the frontend
 frontend:
@@ -37,6 +47,8 @@ http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
   ssl_profile: intermediate
+  trusted_networks: 
+    - 192.168.1.42
 
 ios:
 
@@ -70,12 +82,16 @@ map:
 # Track the sun
 sun:
 
+prometheus:
+  namespace: hassio
+
 # Weather prediction
 sensor:
   - platform: yr
   - platform: ring
   - platform: aftership
     api_key: !secret aftership-api_key
+
 
 # Text to speech
 tts:
@@ -88,6 +104,7 @@ device_tracker:
   - platform: swisscom
     new_device_defaults:
       track_new_devices: false
+  - platform: bluetooth_tracker
 
 ring:
    username: !secret ring-username
@@ -95,6 +112,14 @@ ring:
 
 binary_sensor:
    - platform: ring
+   - platform: template
+     sensors:
+      presence_basement_combined:
+        friendly_name: "Basement Motion Anywhere"
+        value_template: >-
+          {{ is_state('binary_sensor.presence_basement', 'on')
+          or is_state('binary_sensor.presence_basement_stairs', 'on') }}
+
 
 #lock:
 #  - platform: nuki

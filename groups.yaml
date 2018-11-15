@@ -1,62 +1,52 @@
-kitchen:
-  name: Kitchen
+kitchen_lights:
+  name: Kitchen Lights
   entities:
-    - media_player.kitchen
-    - sensor.kitchen_motion_sensor
-
-dinner_table:
-  name: Dinner Table
-  entities:
-    - media_player.kitchen
-    - vacuum.xiaomi_vacuum_cleaner
-
-bedroom:
-  name: Bedroom
-  entities:
-    - media_player.bedroom
+    - light.kitchen_light_1
+    - light.kitchen_light_2
+    - light.kitchen_light_3
+    - light.kitchen_light_4
+    - light.kitchen_light_5
+    - light.kitchen_light_6
     
-living_room:
-  name: Living Room
+basement_lights:
+  name: Basement Lights
   entities:
-    - media_player.fireplace
-    - media_player.living_room_2
-
-#guest_room:
-#  name: Guest Room
-#  entities:
-#     - light.guest_room
-
-#hall_upstairs:
-#  name: Hall Upstairs
-#  entities:
-#    - light.hall
-
-#kids_room:
-#  name: Kids room
-#  entities:
-#    - light.kids_room
-#    - light.kids_room_window
-#    - light.kids_room_main
-#    - media_player.legevrelse
-
-
-basement:
-  name: Basement
+    - light.basement_light_1
+    - light.basement_light_2
+    - light.basement_light_3
+    - light.basement_light_4
+    - light.basement_light_5
+    - light.basement_light_6
+    - light.basement_light_7
+    - light.basement_light_8
+    - light.basement_light_9
+    - light.basement_light_10
+    - light.basement_light_stairs
+    
+dinner_table_lights:
+  name: Dinner Table Lights
   entities:
-    - media_player.alexa
+    - light.dinner_table_light_1
+    - light.dinner_table_light_2
+    - light.dinner_table_light_3
+    - light.dinner_table_light_4
+    - light.dinner_table_light_5
+    - light.dinner_table_light_6
 
-office:
-  name: Max's office
+winter_garden_lights:
+  name: Winter Garden Lights
   entities:
-    - media_player.max_office
+    - light.winter_garden_light_1
+    - light.winter_garden_light_2
+    - light.winter_garden_light_3
+    - light.winter_garden_light_4
+    - light.winter_garden_light_5
 
-
-winter_garden:
-  name: Winter Garden
+hallway_lights:
+  name: Hallway Lights
   entities:
-    - media_player.winter_garden
-
-big_bathroom:
-  name: Bathroom Upstairs
-  entities:
-    - media_player.bathroom
+    - light.hallway_light_1
+    - light.hallway_light_2
+    - light.hallway_light_3
+    - light.hallway_light_4
+    - light.hallway_light_5

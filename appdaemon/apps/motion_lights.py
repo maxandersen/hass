@@ -38,12 +38,12 @@ class MotionLights(hass.Hass):
     if "delay" in self.args:
       delay = self.args["delay"]
     else:
-      delay = 20
+      delay = 300
       
     if new == "on":
       if self.handle == None:
         if "entity_on" in self.args:
-          on_entities = self.args["entity_on"].split(",")
+          on_entities = [x.strip() for x in self.args["entity_on"].split(",")]
           for on_entity in on_entities:
             self.turn_on(on_entity)
           self.log("First motion detected: i turned {} on, and did set timer".format(self.args["entity_on"]))
@@ -53,6 +53,7 @@ class MotionLights(hass.Hass):
       else:
         self.cancel_timer(self.handle)
         self.handle = self.run_in(self.light_off, delay)
+        # TODO: should ensure lights are actually on
         self.log("Motion detected again, i have reset the timer")
   
   def light_off(self, kwargs):
@@ -64,7 +65,7 @@ class MotionLights(hass.Hass):
     if not motion_still_detected:
       self.handle = None
       if "entity_off" in self.args:
-        off_entities = self.args["entity_off"].split(",")
+        off_entities = [x.strip() for x in self.args["entity_off"].split(",")]
         for off_entity in off_entities:
           # If it's a scene we need to turn it on not off
           device, entity = self.split_entity(off_entity)

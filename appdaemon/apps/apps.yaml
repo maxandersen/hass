@@ -3,34 +3,51 @@ deconz_helper:
   module: deconz_helper
   class: DeconzHelper
 
+# error_notifier:
+#   module: error_notifier
+#   class: ErrorNotifier
+#   path_to_errorlog: /config/appdaemon/appdaemon.log
+#   refresh_interval: 5
+
 motion_lights_dinner_table:
   module: motion_lights
   class: MotionLights
-  sensor: binary_sensor.presence_12
-  entity_on: light.dinner_table
-  entity_off: light.dinner_table
-  delay: 600
+  sensor: binary_sensor.presence_dinner_table
+  entity_on: group.dinner_table_lights
+  entity_off: group.dinner_table_lights
   
 motion_lights_hallway:
   module: motion_lights
   class: MotionLights
-  sensor: binary_sensor.presence_6
-  entity_on: light.hallway, light.small_bathroom
-  entity_off: light.hallway, light.small_bathroom
-  delay: 600
+  sensor: binary_sensor.presence_hallway
+  entity_on: group.hallway_lights
+  entity_off: group.hallway_lights
+
+motion_lights_small_bathroom:
+  module: motion_lights
+  class: MotionLights
+  sensor: binary_sensor.presence_small_bathroom
+  entity_on: light.small_bathroom_light
+  entity_off: light.small_bathroom_light
 
 motion_lights_kitchen:
   module: motion_lights
   class: MotionLights
-  sensor: binary_sensor.kitchen_motion
-  entity_on: light.kitchen
-  entity_off: light.kitchen
+  sensor: binary_sensor.presence_kitchen
+  entity_on: group.kitchen_lights
+  entity_off: group.kitchen_lights
   
-motion_lights_wintergarden:
+motion_lights_winter_garden:
   module: motion_lights
   class: MotionLights
-  sensor: binary_sensor.presence_15
-  entity_on: light.winter_garden
-  entity_of: light.kitchen, light.winter_garden
-  
+  sensor: binary_sensor.presence_winter_garden
+  entity_on: group.winter_garden_lights
+  entity_off: group.winter_garden_lights
+
+motion_lights_basement:
+  module: motion_lights
+  class: MotionLights
+  sensor: binary_sensor.presence_basement_combined
+  entity_on: group.basement_lights
+  entity_off: group.baseement_lights
     
