@@ -3,51 +3,61 @@ deconz_helper:
   module: deconz_helper
   class: DeconzHelper
 
-# error_notifier:
-#   module: error_notifier
-#   class: ErrorNotifier
-#   path_to_errorlog: /config/appdaemon/appdaemon.log
-#   refresh_interval: 5
+#error_notifier:
+#  module: error_notifier
+#  class: ErrorNotifier
 
 motion_lights_dinner_table:
-  module: motion_lights
+  module: motion_lightsdev
   class: MotionLights
   sensor: binary_sensor.presence_dinner_table
+  #sensor: input_boolean.test_motion
   entity_on: group.dinner_table_lights
-  entity_off: group.dinner_table_lights
+  countdown: sensor.dinner_table_lights_timer
+  #delay: 5
   
 motion_lights_hallway:
   module: motion_lights
   class: MotionLights
   sensor: binary_sensor.presence_hallway
   entity_on: group.hallway_lights
-  entity_off: group.hallway_lights
+  countdown: sensor.group_hallway_timer
+  
 
 motion_lights_small_bathroom:
   module: motion_lights
   class: MotionLights
   sensor: binary_sensor.presence_small_bathroom
   entity_on: light.small_bathroom_light
-  entity_off: light.small_bathroom_light
-
+  countdown: sensor.small_bathroom_timer
+  
 motion_lights_kitchen:
   module: motion_lights
   class: MotionLights
   sensor: binary_sensor.presence_kitchen
   entity_on: group.kitchen_lights
-  entity_off: group.kitchen_lights
-  
+  countdown: sensor.kitchen_lights_timer
+
 motion_lights_winter_garden:
   module: motion_lights
   class: MotionLights
   sensor: binary_sensor.presence_winter_garden
   entity_on: group.winter_garden_lights
-  entity_off: group.winter_garden_lights
-
+  countdown: sensor.winter_garden_lights_timer
+  
 motion_lights_basement:
   module: motion_lights
   class: MotionLights
   sensor: binary_sensor.presence_basement_combined
   entity_on: group.basement_lights
-  entity_off: group.baseement_lights
-    
+  countdown: sensor.basement_lights_timer
+  
+
+motion_lights_office:
+  module: motion_lightsdev
+  class: MotionLights
+  sensor: input_boolean.test_motio
+  entity_on: light.office_light
+  delay: 5
+  countdown: sensor.office_light_timer
+  

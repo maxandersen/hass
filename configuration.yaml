@@ -49,6 +49,7 @@ http:
   ssl_profile: intermediate
   trusted_networks: 
     - 192.168.1.42
+    - 192.168.1.113
 
 ios:
 
@@ -83,7 +84,7 @@ map:
 sun:
 
 prometheus:
-  namespace: hassio
+  namespace: hass
 
 # Weather prediction
 sensor:
@@ -109,6 +110,12 @@ device_tracker:
 ring:
    username: !secret ring-username
    password: !secret ring-password
+
+input_boolean:
+  test_motion:
+    name: Flag to test
+    initial: off
+    icon: mdi:motion
 
 binary_sensor:
    - platform: ring
