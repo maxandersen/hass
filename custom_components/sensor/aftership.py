@@ -1,16 +1,8 @@
 """
-Sensor for AfterShip.
-
 Gives a sensor of all non-delivered packages recorded in AfterShip.
 
-Requires an api key which can be aquired from
-https://secure.aftership.com/#/settings/api.
-
-Example configuration:
-
-sensor:
-   - platform: aftership
-     api_key: AFTERSHIP_API_KEY
+For more details about this platform, please refer to the documentation at
+https://www.home-assistant.io/components/sensor.aftership/
 """
 from datetime import timedelta
 import logging
@@ -18,19 +10,24 @@ import logging
 import voluptuous as vol
 
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import (
-    ATTR_ATTRIBUTION, CONF_API_KEY, CONF_NAME)
+from homeassistant.const import ATTR_ATTRIBUTION, CONF_API_KEY, CONF_NAME
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
 
-REQUIREMENTS = ['aftership==0.2']
+REQUIREMENTS = ['pyaftership==0.1.2']
 
 _LOGGER = logging.getLogger(__name__)
 
 ATTRIBUTION = 'Information provided by AfterShip'
 
 DEFAULT_NAME = 'aftership'
+
+CONF_TITLE = 'title'
+CONF_SLUG = 'slug'
+
+CONF_TRACKING_NUMBER = 'tracking_number'
 
 ICON = 'mdi:package-variant-closed'
 
@@ -39,29 +36,40 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=30)
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_API_KEY): cv.string,
     vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-})
+    })
 
 
-def setup_platform(hass, config, add_entities, discovery_info=None):
-    """Set up the PostNL sensor platform."""
-    import aftership
+async def async_setup_platform(
+        hass, config, async_add_entities, discovery_info=None):
+    """Set up the AfterShip sensor platform."""
+    from pyaftership.tracker import Tracking
 
-    apikey = config.get(CONF_API_KEY)
-    name = config.get(CONF_NAME)
-    api = aftership.APIv4(apikey)
+    apikey = config[CONF_API_KEY]
+    name = config[CONF_NAME]
 
-    add_entities([AfterShipSensor(api, name)], True)
+    session = async_get_clientsession(hass)
+    aftership = Tracking(hass.loop, session, apikey)
+
+    await aftership.get_trackings()
+
+    if not aftership.meta or aftership.meta['code'] != 200:
+        _LOGGER.error("No tracking data found. Check API key is correct: %s",
+                      aftership.meta)
+        return
+
+    sensor = [AfterShipSensor(aftership, name)]
+    async_add_entities(sensor, True)
 
 
 class AfterShipSensor(Entity):
     """Representation of a AfterShip sensor."""
 
-    def __init__(self, api, name):
-        """Initialize the AfterShip sensor."""
+    def __init__(self, aftership, name):
+        """Initialize the sensor."""
+        self._attributes = {}
         self._name = name
-        self._attributes = None
         self._state = None
-        self._api = api
+        self.aftership = aftership
 
     @property
     def name(self):
@@ -80,7 +88,7 @@ class AfterShipSensor(Entity):
 
     @property
     def device_state_attributes(self):
-        """Return the state attributes."""
+        """Return attributes for the sensor."""
         return self._attributes
 
     @property
@@ -89,29 +97,34 @@ class AfterShipSensor(Entity):
         return ICON
 
     @Throttle(MIN_TIME_BETWEEN_UPDATES)
-    def update(self):
-        """Update device state."""
-        import aftership
+    async def async_update(self):
+        """Get the latest data from the AfterShip API."""
+        await self.aftership.get_trackings()
 
-        try:
-            trackingstop = self._api.trackings.get()
-            status_counts = {}
-
-            for tracking in trackingstop['trackings']:
-                status = tracking['tag']
-                name = tracking['tracking_number']
-                if status != 'Delivered':
-                    status_counts[name] = status
-
-            self._attributes = {
-                ATTR_ATTRIBUTION: ATTRIBUTION,
-                **status_counts
-            }
-
-            self._state = len(status_counts)
-        except aftership.APIv4RequestException as error:
-            _LOGGER.exception(
-                "Error when using the AfterShip webservice: %s %s %s",
-                error.code(), error.type(), error.message()
-            )
+        if not self.aftership.meta:
+            _LOGGER.error("Unkown errors when querying. See logs for details.")
             return
+        if self.aftership.meta['code'] != 200:
+            _LOGGER.error("Errors when querying AfterShip. %s",
+                          str(self.aftership.meta))
+            return
+
+        status_to_ignore = {'Delivered'}
+        status_counts = {}
+        not_delivered_count = 0
+
+        for tracking in self.aftership.trackings['trackings']:
+            status = tracking['tag']
+            name = tracking['tracking_number']
+            status_counts[status] = status_counts.get(status, 0)+1
+            if status not in status_to_ignore:
+                not_delivered_count += 1
+            else:
+                _LOGGER.debug("Ignoring %s as it has status: %s", name, status)
+
+        self._attributes = {
+            ATTR_ATTRIBUTION: ATTRIBUTION,
+            **status_counts
+        }
+
+        self._state = not_delivered_count

@@ -6,6 +6,7 @@ import appdaemon.plugins.hass.hassapi as hass
 # entity_on : entity to turn on when detecting motion, can be a light, script, scene or anything else that can be turned on. more lights are sepetated with ,
 # entity_off : entity to turn off when detecting motion, can be a light, script or anything else that can be turned off. Can also be a scene which will be turned on. more lights are sepetated with ,
 # delay: amount of time after turning on to turn off again. If not specified defaults to 60 seconds.
+#  
 #
 # Release Notes
 #
@@ -26,9 +27,9 @@ import itertools
 class MotionLights(hass.Hass):
 
   def initialize(self):
-    
-    self.handle = None
-    
+     
+    self.handle = None 
+
     if "sensor" in self.args:
       self.sensors = self.args.get("sensor","").split(",")
       self.log("Listen to {}".format(self.sensors))
@@ -37,6 +38,7 @@ class MotionLights(hass.Hass):
     else:
       self.log("No sensor specified, doing nothing")
     
+    self.timer = self.args.get("countdown")
     self.on_entities = [x.strip() for x in self.args.get("entity_on", "").split(",")]
     self.off_entities = [x.strip() for x in self.args.get("entity_off", self.args.get("entity_on", "")).split(",")]
 
@@ -51,27 +53,24 @@ class MotionLights(hass.Hass):
      
   def reset_on_motion(self):
     self.currentstate = iter(self.states)
-    self.cancel_timer(self.handle)
-    self.handle = self.run_in(self.timed_out, self.delay)
-    time, interval, kwargs = self.info_timer(self.handle)
-    self.log("Motion detected - timer reset to call at {} with {} intervals".format(time.isoformat(),interval))
-    if "countdown" in self.args:
-      self.set_state(self.args["countdown"], state = "on", attributes = { "trigger_time" : time.isoformat() })
     
+    self.log("Calling start timer on {}".format(self.timer))
+    if (self.handle):
+        self.cancel_listen_event(self.handle)
+    
+    self.call_service("timer/cancel", entity_id = self.timer)
+    self.call_service("timer/start", entity_id = self.timer, duration = self.delay)
+    
+    self.handle = self.listen_event(self.timed_out, "timer/finished", entity_id = self.timer)
 
+    
   def motion(self, entity, attribute, old, new, kwargs):
     self.log("{} changed on {} from {} to {}".format(attribute, entity, old, new))
+    self.reset_on_motion()
     if new == "on":
-      if self.handle == None:
-        self.log("info handle")
-        self.reset_on_motion()
-        self._turn_on()
-      else:
-        self.log("info handle NOT")
-        self.reset_on_motion()
-        # TODO: should ensure lights are actually on
-        self.log("Motion detected again, i have reset the timer")
-  
+      ## todo only fire turn on if timer started ?
+      self._turn_on()
+    
   def motion_detected(self):
     for sensor in self.sensors:
       self.log("sensor " + sensor + " is " + self.get_state(sensor))
@@ -81,12 +80,9 @@ class MotionLights(hass.Hass):
     return False
     
   def timed_out(self, kwargs):
-    if "countdown" in self.args:
-        self.set_state(self.args["countdown"], state = "off")
- 
+    
     self.log("Timed out")
     if not self.motion_detected():
-      self.handle = None
       self._turn_off()
     else:
       self.log("Timer has Ended, but a motion detector is still on. Restarting timer")

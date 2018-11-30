@@ -12,7 +12,8 @@ homeassistant:
   time_zone: Europe/Zurich
   # Customization file
   customize: !include customize.yaml
-
+  packages: !include_dir_named packages
+    
 zone:
   - name: School
     latitude: !secret school-latitude
@@ -92,6 +93,9 @@ sensor:
   - platform: ring
   - platform: aftership
     api_key: !secret aftership-api_key
+  - platform: seventeentrack
+    username: !secret seventeentrack-username
+    password: !secret seventeentrack-password
 
 
 # Text to speech
@@ -150,5 +154,5 @@ shell_command:
   #     homeassistant.components.deconz: debug
 
 group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
+#automation: !include automations.yaml
+#script: !include scripts.yaml

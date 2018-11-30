@@ -12,8 +12,15 @@ title: Andersens Home
 views:
   - title: Lights
     cards:
-      - type: custom:custom-timer-card
-        entity: sensor.dinner_table_lights_timer
+      - type: custom:monster-card
+        id: winter_garden
+        show_empty: true
+        card:
+          type: entities
+          title: Winter Garden
+        filter:
+          include:
+            - entity_id: '*winter_garden*'
       - type: custom:monster-card
         id: all_timers
         show_empty: true
