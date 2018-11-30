@@ -1,0 +1,4 @@
+alias: kitchen
+motion_sensor: binary_sensor.presence_kitchen
+timer: kitchen_timer
+lights: group.kitchen_lights

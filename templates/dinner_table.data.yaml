@@ -1,0 +1,4 @@
+alias: dinner table
+motion_sensor: binary_sensor.presence_dinner_table
+timer: dinner_table_timer
+lights: group.dinner_table_lights

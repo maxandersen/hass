@@ -1,0 +1,4 @@
+alias: small bathroom
+motion_sensor: binary_sensor.presence_small_bathroom
+timer: small_bathroom_timer
+lights: light.small_bathroom_light

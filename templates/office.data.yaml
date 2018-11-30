@@ -1,0 +1,5 @@
+alias: office lights
+motion_sensor: input_boolean.test_motion
+timer: office_timer
+lights: light.office_light
+

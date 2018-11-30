@@ -1,0 +1,4 @@
+alias: hallway
+motion_sensor: binary_sensor.presence_hallway
+timer: hallway_timer
+lights: group.hallway_lights

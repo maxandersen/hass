@@ -1,0 +1,37 @@
+
+## WARNING: This is a generated file
+## will eventually be overwritten
+
+
+automation:
+  - alias: Turn on winter garden when there is movement
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.presence_winter_garden
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.timer_winter_garden
+      - service: homeassistant.turn_on
+        entity_id: group.winter_garden_lights
+  - alias: Turn off winter garden lights at end of timer
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_winter_garden
+    action:
+      - service: homeassistant.turn_off
+        entity_id: group.winter_garden_lights
+
+timer:
+      timer_winter_garden:
+          duration: "00:15:00"
+
+group:  
+  winter_garden_motionview:
+    name: winter garden
+    entities:
+      - binary_sensor.presence_winter_garden
+      - timer.timer_winter_garden
+      - group.winter_garden_lights

@@ -1,0 +1,37 @@
+
+## WARNING: This is a generated file
+## will eventually be overwritten
+
+
+automation:
+  - alias: Turn on office lights when there is movement
+    trigger:
+      - platform: state
+        entity_id: input_boolean.test_motion
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.timer_office_lights
+      - service: homeassistant.turn_on
+        entity_id: light.office_light
+  - alias: Turn off office lights lights at end of timer
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_office_lights
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.office_light
+
+timer:
+      timer_office_lights:
+          duration: "00:15:00"
+
+group:  
+  office_lights_motionview:
+    name: office lights
+    entities:
+      - input_boolean.test_motion
+      - timer.timer_office_lights
+      - light.office_light

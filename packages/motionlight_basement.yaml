@@ -1,0 +1,37 @@
+
+## WARNING: This is a generated file
+## will eventually be overwritten
+
+
+automation:
+  - alias: Turn on basement when there is movement
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.presence_basement_combined
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.timer_basement
+      - service: homeassistant.turn_on
+        entity_id: group.basement_lights
+  - alias: Turn off basement lights at end of timer
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_basement
+    action:
+      - service: homeassistant.turn_off
+        entity_id: group.basement_lights
+
+timer:
+      timer_basement:
+          duration: "00:15:00"
+
+group:  
+  basement_motionview:
+    name: basement
+    entities:
+      - binary_sensor.presence_basement_combined
+      - timer.timer_basement
+      - group.basement_lights

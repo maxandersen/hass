@@ -1,0 +1,4 @@
+alias: winter garden
+motion_sensor: binary_sensor.presence_winter_garden
+timer: timer_winter_garden
+lights: group.winter_garden_lights

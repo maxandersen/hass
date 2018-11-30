@@ -1,0 +1,4 @@
+alias: basement
+motion_sensor: binary_sensor.presence_basement_combined
+timer: basement_timer
+lights: group.basement_lights

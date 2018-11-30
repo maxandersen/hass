@@ -1,0 +1,37 @@
+
+## WARNING: This is a generated file
+## will eventually be overwritten
+
+
+automation:
+  - alias: Turn on kitchen when there is movement
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.presence_kitchen
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.timer_kitchen
+      - service: homeassistant.turn_on
+        entity_id: group.kitchen_lights
+  - alias: Turn off kitchen lights at end of timer
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_kitchen
+    action:
+      - service: homeassistant.turn_off
+        entity_id: group.kitchen_lights
+
+timer:
+      timer_kitchen:
+          duration: "00:15:00"
+
+group:  
+  kitchen_motionview:
+    name: kitchen
+    entities:
+      - binary_sensor.presence_kitchen
+      - timer.timer_kitchen
+      - group.kitchen_lights

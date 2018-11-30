@@ -1,0 +1,37 @@
+
+## WARNING: This is a generated file
+## will eventually be overwritten
+
+
+automation:
+  - alias: Turn on small bathroom when there is movement
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.presence_small_bathroom
+        to: 'on'
+    action:
+      - service: timer.start
+        entity_id: timer.timer_small_bathroom
+      - service: homeassistant.turn_on
+        entity_id: light.small_bathroom_light
+  - alias: Turn off small bathroom lights at end of timer
+    trigger:
+      - platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.timer_small_bathroom
+    action:
+      - service: homeassistant.turn_off
+        entity_id: light.small_bathroom_light
+
+timer:
+      timer_small_bathroom:
+          duration: "00:15:00"
+
+group:  
+  small_bathroom_motionview:
+    name: small bathroom
+    entities:
+      - binary_sensor.presence_small_bathroom
+      - timer.timer_small_bathroom
+      - light.small_bathroom_light
