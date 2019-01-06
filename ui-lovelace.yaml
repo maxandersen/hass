@@ -7,9 +7,109 @@ resources:
     type: js
   - url: /local/lovelace/timer-card.js
     type: js
-
+  - url: /local/lovelace/plan-coordinates.js?v=1
+    type: js
+  
 title: Andersens Home
 views:
+  - title: Overview
+    panel: true
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:plan-coordinates
+          - type: picture-elements
+            image: /local/floorplan/groundfloor.png
+            elements:
+              - type: image
+                entity: group.kitchen_lights
+                tap_action:
+                  action: toggle
+                image: /local/floorplan/dark_kitchen.png
+                state_filter:
+                  "off": opacity(50%) 
+                  "on": opacity(1%)
+                style:
+                  left: 67%
+                  top: 22% 
+  - title: Rooms
+    cards:
+      - type: glance
+        title: Kitchen
+        show_name: false
+        entities:
+          - entity: group.kitchen_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - entity: group.kitchen_table_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - sensor.temperature_kitchen
+          - binary_sensor.presence_kitchen
+          - timer.timer_kitchen
+      - type: glance
+        title: Dinner Table
+        show_name: false
+        entities:
+          - entity: group.dinner_table_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - light.dinner_table_wall_light
+          - sensor.temperature_dinner_table
+          - binary_sensor.presence_dinner_table
+          - timer.timer_dinner_table
+      - type: glance
+        title: Winter Garden
+        show_name: false
+        entities:
+          - entity: group.winter_garden_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - sensor.temperature_winter_garden
+          - binary_sensor.presence_winter_garden
+          - timer.timer_winter_garden
+      - type: glance
+        title: Hallway
+        show_name: false
+        entities:
+          - entity: group.hallway_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - sensor.temperature_hallway
+          - binary_sensor.presence_hallway
+          - timer.timer_hallway
+      - type: glance
+        title: Entrance
+        show_name: false
+        entities:
+          - entity: group.entrance_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+      - type: glance
+        title: Basement
+        show_name: false
+        entities:
+          - entity: group.basement_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - sensor.temperature_basement_stairs
+          - sensor.temperature_basement
+          - timer.timer_basement
+      - type: glance
+        title: Office
+        show_name: false
+        entities:
+          - entity: light.office_light
+            tap_action:
+              action: toggle
+
   - title: Lights
     cards:
       - type: custom:monster-card
@@ -96,6 +196,9 @@ views:
         filter:
           include:
             - entity_id: '*battery_level*'
+            - attributes:
+                - battery: '>0'
+
 
 
 

@@ -1,0 +1,16 @@
+- id: '1545399004499'
+  alias: tell terrace door is open
+  trigger:
+  - entity_id: binary_sensor.openclose_kitchen_terrace_door
+    for: 00:00:05
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      delay: 00:00:05
+      message: Terrace door is open - Please close it!
+      sonos_entity: media_player.kitchen
+      volume: 0.5
+    service: script.sonos_say

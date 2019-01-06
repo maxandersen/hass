@@ -13,7 +13,7 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   packages: !include_dir_named packages
-    
+
 zone:
   - name: School
     latitude: !secret school-latitude
@@ -36,7 +36,7 @@ homekit:
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.1.118
+    host: 192.168.1.107
     token: !secret rockrobo-token
 
 # Enables configuration UI
@@ -48,7 +48,7 @@ http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
   ssl_profile: intermediate
-  trusted_networks: 
+  trusted_networks:
     - 192.168.1.42
     - 192.168.1.113
 
@@ -77,15 +77,15 @@ ffmpeg:
 
 # View all events in a logbook
 logbook:
- 
+
 # Enables a map showing the location of tracked devices
 map:
 
 # Track the sun
 sun:
 
-prometheus:
-  namespace: hass
+#prometheus:
+#  namespace: hass
 
 # Weather prediction
 sensor:
@@ -97,6 +97,21 @@ sensor:
     username: !secret seventeentrack-username
     password: !secret seventeentrack-password
 
+
+switch:
+  - platform: broadlink
+    host: !secret broadlink-host
+    mac: !secret broadlink-mac
+    timeout: 15
+    switches:
+      humidifier:
+        friendly_name: "Bedroom humidifer"
+        command_on: 'JgBQAAABLJQUEREVExIUEREVEzcRFRMRFDcUNxA6FDcTNxEVEzcRORQSETkUEhEUFBEUEhEUFBEUNxMSFDcTNxE6FDcTNxE4FQAFKgABLEkTAA0FAAAAAAAAAAA='
+        command_off: 'JgBQAAABLJQUEREVExIUEREVEzcRFRMRFDcUNxA6FDcTNxEVEzcRORQSETkUEhEUFBEUEhEUFBEUNxMSFDcTNxE6FDcTNxE4FQAFKgABLEkTAA0FAAAAAAAAAAA='
+      sony_tv:
+        friendly_name: "Bedroom TV"
+        command_on: 'JgCMAFESKRIWEikSFhIpEhYSFRIqEhUSFhIVExUAA1FREikTFRIpExUSKRMVEhYSKRIWEhUTFRIWAANRURIpEhYSKRIWEikSFhIVEioSFRMVEhUTFQADU1ESKRIWEikSFhIpEhYSFRMpEhUTFRIVExUAA1NREikSFhIpEhYSKRIWEhUSKhIVEhYSFRMVAA0FAAAAAAAAAAAAAAAA'
+        command_off: 'JgCMAFESKRIWEikSFhIpEhYSFRIqEhUSFhIVExUAA1FREikTFRIpExUSKRMVEhYSKRIWEhUTFRIWAANRURIpEhYSKRIWEikSFhIVEioSFRMVEhUTFQADU1ESKRIWEikSFhIpEhYSFRMpEhUTFRIVExUAA1NREikSFhIpEhYSKRIWEhUSKhIVEhYSFRMVAA0FAAAAAAAAAAAAAAAA'
 
 # Text to speech
 tts:
@@ -132,10 +147,10 @@ binary_sensor:
           or is_state('binary_sensor.presence_basement_stairs', 'on') }}
 
 
-#lock:
-#  - platform: nuki
-#    host: 192.168.1.115
-#    token: !secret nuki-token
+lock:
+  - platform: nuki
+    host: 192.168.1.133
+    token: !secret nuki-token
 
 camera:
    - platform: ring
@@ -153,6 +168,9 @@ shell_command:
   #     pydeconz: debug
   #     homeassistant.components.deconz: debug
 
+lovelace:
+  mode: yaml
+  
 group: !include groups.yaml
-#automation: !include automations.yaml
-#script: !include scripts.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

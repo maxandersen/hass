@@ -7,7 +7,13 @@ kitchen_lights:
     - light.kitchen_light_4
     - light.kitchen_light_5
     - light.kitchen_light_6
-    
+
+kitchen_table_lights:
+  name: Kitchen Table Lights
+  entities:
+    - light.kitchen_table_light_1
+    - light.kitchen_table_light_2
+
 basement_lights:
   name: Basement Lights
   entities:
@@ -50,3 +56,12 @@ hallway_lights:
     - light.hallway_light_3
     - light.hallway_light_4
     - light.hallway_light_5
+
+entrance_lights:
+  name: Entrance Lights
+  entities:
+    - light.entrance_light_1
+    - light.entrance_light_2
+    - light.entrance_light_3
+    - light.entrance_light_4
+    - light.entrance_light_5
