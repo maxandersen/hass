@@ -27,11 +27,81 @@ views:
                   action: toggle
                 image: /local/floorplan/dark_kitchen.png
                 state_filter:
-                  "off": opacity(50%) 
+                  "off": opacity(50%)
                   "on": opacity(1%)
+                  "unknown": opacity(1%)
                 style:
-                  left: 67%
-                  top: 22% 
+                  left: 0%
+                  top: 0%
+                  transform: none
+              - type: image
+                entity: group.dinner_table_lights
+                tap_action:
+                  action: toggle
+                image: /local/floorplan/dark_dinner_table.png
+                state_filter:
+                  "off": opacity(50%)
+                  "on": opacity(1%)
+                  "unknown": opacity(1%)
+                style:
+                  left: 0%
+                  top: 0%
+                  transform: none
+
+              - type: image
+                entity: group.winter_garden_lights
+                tap_action:
+                  action: toggle
+                image: /local/floorplan/dark_winter_garden.png
+                state_filter:
+                  "off": opacity(50%)
+                  "on": opacity(1%)
+                  "unknown": opacity(1%)
+                style:
+                  left: 0%
+                  top: 0%
+                  transform: none
+              - type: image
+                entity: group.hallway_lights
+                tap_action:
+                  action: toggle
+                image: /local/floorplan/dark_hallway.png
+                state_filter:
+                  "off": opacity(50%)
+                  "on": opacity(1%)
+                  "unknown": opacity(1%)
+                style:
+                  left: 0%
+                  top: 0%
+                  transform: none
+              - type: image
+                entity: light.small_bathroom_light
+                tap_action:
+                  action: toggle
+                image: /local/floorplan/dark_small_bathroom.png
+                state_filter:
+                  "off": opacity(50%)
+                  "on": opacity(1%)
+                  "unknown": opacity(1%)
+                style:
+                  left: 0%
+                  top: 0%
+                  transform: none
+              - type: image
+                entity: group.entrance_lights
+                tap_action:
+                  action: toggle
+                image: /local/floorplan/dark_entrance.png
+                state_filter:
+                  "off": opacity(50%)
+                  "on": opacity(1%) 
+                  "unknown": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
+                style:
+                  left: 0%
+                  top: 0%
+                  transform: none
+               
+      
   - title: Rooms
     cards:
       - type: glance
