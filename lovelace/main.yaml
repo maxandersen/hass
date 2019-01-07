@@ -1,0 +1,185 @@
+title: Andersens Home
+
+{% set plugins = [
+  '/local/lovelace/monster-card.js',
+  '/local/lovelace/timer-card.js',
+  '/local/lovelace/plan-coordinates.js',
+  ] %}
+
+# Copy resources from anywhere to www/lovelace and include them
+resources:
+  {% for p in plugins %}
+  - url: !file {{ p }}
+    type: js
+  {% endfor %}
+views:
+  - title: Overview
+    panel: true
+    cards:
+      !include floorplan.yaml
+  - title: Rooms
+    cards:
+      - type: glance
+        title: Kitchen
+        show_name: false
+        entities:
+          - entity: group.kitchen_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - entity: group.kitchen_table_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - sensor.temperature_kitchen
+          - binary_sensor.presence_kitchen
+          - timer.timer_kitchen
+      - type: glance
+        title: Dinner Table
+        show_name: false
+        entities:
+          - entity: group.dinner_table_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - light.dinner_table_wall_light
+          - sensor.temperature_dinner_table
+          - binary_sensor.presence_dinner_table
+          - timer.timer_dinner_table
+      - type: glance
+        title: Winter Garden
+        show_name: false
+        entities:
+          - entity: group.winter_garden_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - sensor.temperature_winter_garden
+          - binary_sensor.presence_winter_garden
+          - timer.timer_winter_garden
+      - type: glance
+        title: Hallway
+        show_name: false
+        entities:
+          - entity: group.hallway_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - sensor.temperature_hallway
+          - binary_sensor.presence_hallway
+          - timer.timer_hallway
+      - type: glance
+        title: Entrance
+        show_name: false
+        entities:
+          - entity: group.entrance_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+      - type: glance
+        title: Basement
+        show_name: false
+        entities:
+          - entity: group.basement_lights
+            icon: mdi:lightbulb-outline
+            tap_action:
+              action: toggle
+          - sensor.temperature_basement_stairs
+          - sensor.temperature_basement
+          - timer.timer_basement
+      - type: glance
+        title: Office
+        show_name: false
+        entities:
+          - entity: light.office_light
+            tap_action:
+              action: toggle
+
+  - title: Lights
+    cards:
+      - type: custom:monster-card
+        id: winter_garden
+        show_empty: true
+        card:
+          type: entities
+          title: Winter Garden
+        filter:
+          include:
+            - entity_id: '*winter_garden*'
+      - type: custom:monster-card
+        id: all_timers
+        show_empty: true
+        card:
+          type: entities
+          title: All Timers
+        filter:
+          include:
+            - entity_id: '*_timer'
+      - type: custom:monster-card
+        id: all_lights
+        show_empty: true
+        card:
+          type: entities
+          title: All Lights
+        filter:
+          include:
+            - domain: light
+      - type: custom:monster-card
+        id: all_binary_sensors
+        show_empty: true
+        card:
+          type: entities
+          title: All Binary Sensors
+        filter:
+          include:
+            - entity_id: 'binary*'
+      - type: custom:monster-card
+        id: all_inputs
+        show_empty: true
+        card:
+          type: entities
+          title: All Inputs
+        filter:
+          include:
+            - entity_id: input_*
+            - entity_id: '*office*'
+      - type: custom:monster-card
+        id: all_presence_sensors
+        show_empty: true
+        card:
+          type: entities
+          title: All Presence Sensors
+        filter:
+          include:
+            - entity_id: '*presence*'
+      - type: custom:monster-card
+        id: all_group_sensors
+        show_empty: true
+        card:
+          type: entities
+          title: All Group Sensors
+        filter:
+          include:
+            - entity_id: 'group*'
+  - title: Temperature and Batteries
+    cards:
+      - type: custom:monster-card
+        id: all_temperature
+        show_empty: true
+        card:
+          type: entities
+          title: All Temperature
+        filter:
+          include:
+            - entity_id: '*temperature*'
+      - type: custom:monster-card
+        id: all_batteries
+        show_empty: true
+        card:
+          type: glance
+          title: All Batteries
+        filter:
+          include:
+            - entity_id: '*battery_level*'
+            - attributes:
+                - battery: '>0'
