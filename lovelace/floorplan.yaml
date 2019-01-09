@@ -3,10 +3,6 @@
             \"off\": opacity(50%)
             \"on\": opacity(1%)
             \"unknown\": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-          style:
-            left: 0%
-            top: 0%
-            transform: none
           tap_action:
             action: toggle
 """ %}
@@ -23,28 +19,56 @@
         - type: image
           entity: light.dinner_table_wall_light
           image: !file /local/floorplan/dark_dinner_wall.png
+          style:
+            left: 37%
+            top: 40%
+            transform: none
           {{ shared }}
         - type: image
           entity: group.kitchen_lights
           image: !file /local/floorplan/dark_kitchen.png
+          style:
+            left: 60%
+            top: 8%
+            transform: none
           {{ shared }}
         - type: image
           entity: group.dinner_table_lights
           image: !file /local/floorplan/dark_dinner_table.png
+          style:
+            left: 37%
+            top: 8%
+            transform: none
           {{ shared }}
         - type: image
           entity: group.winter_garden_lights
           image: !file /local/floorplan/dark_winter_garden.png
+          style: 
+            left: 23%
+            top: 8%
+            transform: none
           {{ shared }}
         - type: image
           entity: group.hallway_lights
           image: !file /local/floorplan/dark_hallway.png
+          style:
+            left: 50%
+            top: 55%
+            transform: none
           {{ shared }}
         - type: image
           entity: light.small_bathroom_light
           image: !file /local/floorplan/dark_small_bathroom.png
+          style:
+            left: 84%
+            top: 89%
+            transform: none
           {{ shared }}
         - type: image
           entity: group.entrance_lights
           image: !file /local/floorplan/dark_entrance.png
+          style:
+            left: 62%
+            top: 35%
+            transform: none
           {{ shared }}

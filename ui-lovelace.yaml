@@ -8,13 +8,13 @@ title: Andersens Home
 
 # Copy resources from anywhere to www/lovelace and include them
 resources:
-- url: /local/lovelace/monster-card.js?1546876446.868351
+- url: /local/lovelace/monster-card.js?1546942517.520332
   type: js
 
-- url: /local/lovelace/timer-card.js?1546876446.8684301
+- url: /local/lovelace/timer-card.js?1546942517.5204139
   type: js
 
-- url: /local/lovelace/plan-coordinates.js?1546876446.868505
+- url: /local/lovelace/plan-coordinates.js?1546942517.520467
   type: js
 
 views:
@@ -25,7 +25,7 @@ views:
     cards:
     - type: custom:plan-coordinates
     - type: picture-elements
-      image: /local/floorplan/groundfloor.png?1546876446.945794
+      image: /local/floorplan/groundfloor.png?1546942517.6254048
       style:
         left: 0%
         top: 0%
@@ -33,106 +33,106 @@ views:
       elements:
       - type: image
         entity: light.dinner_table_wall_light
-        image: /local/floorplan/dark_dinner_wall.png?1546876446.9466949
+        image: /local/floorplan/dark_dinner_wall.png?1546942517.6256099
+        style:
+          left: 37%
+          top: 40%
+          transform: none
 
         state_filter:
           "off": opacity(50%)
           "on": opacity(1%)
           "unknown": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-        style:
-          left: 0%
-          top: 0%
-          transform: none
         tap_action:
           action: toggle
 
       - type: image
         entity: group.kitchen_lights
-        image: /local/floorplan/dark_kitchen.png?1546876446.947155
+        image: /local/floorplan/dark_kitchen.png?1546942517.62598
+        style:
+          left: 60%
+          top: 8%
+          transform: none
 
         state_filter:
           "off": opacity(50%)
           "on": opacity(1%)
           "unknown": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-        style:
-          left: 0%
-          top: 0%
-          transform: none
         tap_action:
           action: toggle
 
       - type: image
         entity: group.dinner_table_lights
-        image: /local/floorplan/dark_dinner_table.png?1546876446.9473972
+        image: /local/floorplan/dark_dinner_table.png?1546942517.626338
+        style:
+          left: 37%
+          top: 8%
+          transform: none
 
         state_filter:
           "off": opacity(50%)
           "on": opacity(1%)
           "unknown": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-        style:
-          left: 0%
-          top: 0%
-          transform: none
         tap_action:
           action: toggle
 
       - type: image
         entity: group.winter_garden_lights
-        image: /local/floorplan/dark_winter_garden.png?1546876446.9476311
+        image: /local/floorplan/dark_winter_garden.png?1546942517.626708
+        style:
+          left: 23%
+          top: 8%
+          transform: none
 
         state_filter:
           "off": opacity(50%)
           "on": opacity(1%)
           "unknown": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-        style:
-          left: 0%
-          top: 0%
-          transform: none
         tap_action:
           action: toggle
 
       - type: image
         entity: group.hallway_lights
-        image: /local/floorplan/dark_hallway.png?1546876446.947856
+        image: /local/floorplan/dark_hallway.png?1546942517.627151
+        style:
+          left: 50%
+          top: 55%
+          transform: none
 
         state_filter:
           "off": opacity(50%)
           "on": opacity(1%)
           "unknown": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-        style:
-          left: 0%
-          top: 0%
-          transform: none
         tap_action:
           action: toggle
 
       - type: image
         entity: light.small_bathroom_light
-        image: /local/floorplan/dark_small_bathroom.png?1546876446.948822
+        image: /local/floorplan/dark_small_bathroom.png?1546942517.627512
+        style:
+          left: 84%
+          top: 89%
+          transform: none
 
         state_filter:
           "off": opacity(50%)
           "on": opacity(1%)
           "unknown": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-        style:
-          left: 0%
-          top: 0%
-          transform: none
         tap_action:
           action: toggle
 
       - type: image
         entity: group.entrance_lights
-        image: /local/floorplan/dark_entrance.png?1546876446.9519942
+        image: /local/floorplan/dark_entrance.png?1546942517.6279511
+        style:
+          left: 62%
+          top: 35%
+          transform: none
 
         state_filter:
           "off": opacity(50%)
           "on": opacity(1%)
           "unknown": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-        style:
-          left: 0%
-          top: 0%
-          transform: none
         tap_action:
           action: toggle
 - title: Rooms
