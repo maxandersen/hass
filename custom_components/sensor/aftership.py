@@ -109,7 +109,7 @@ class AfterShipSensor(Entity):
                           str(self.aftership.meta))
             return
 
-        status_to_ignore = {'Delivered'}
+        status_to_ignore = {'Delivered','Expired'}
         status_counts = {}
         not_delivered_count = 0
 

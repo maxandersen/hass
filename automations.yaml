@@ -14,3 +14,90 @@
       sonos_entity: media_player.kitchen
       volume: 0.5
     service: script.sonos_say
+- alias: Enable Fluxer
+  trigger:
+    platform: homeassistant
+    event: start
+  hide_entity: true
+  action:
+  - service: switch.turn_on
+    entity_id: switch.fluxer
+  id: d2458656c087410ca44dcddad2f0fd0f
+- id: '1549818506618'
+  alias: Humidifier On/Off
+  trigger:
+  - event_data:
+      event: 1002
+      id: rwl021_48
+    event_type: deconz_event
+    platform: event
+  condition: []
+  action:
+  - data:
+      packet: JgBQAAABLJQUEREVExIUEREVEzcRFRMRFDcUNxA6FDcTNxEVEzcRORQSETkUEhEUFBEUEhEUFBEUNxMSFDcTNxE6FDcTNxE4FQAFKgABLEkTAA0FAAAAAAAAAAA=
+    service: switch.broadlink_send_packet_192_168_1_150
+- id: '1549818506619'
+  alias: Humidifier Down
+  trigger:
+  - event_data:
+      event: 3002
+      id: rwl021_48
+    event_type: deconz_event
+    platform: event
+  condition: []
+  action:
+  - data:
+      packet: JgBYAAABKpUUERMTERQTEhQSEDoUEhAVEzcROhM4EzcRORQSETkUNxQ3EBUTEhQREToUEREVExIUERE5FDcUNxEUFDcRORQ3EwAFKwABK0oUAAxyAAEsSRQADQU=
+    service: switch.broadlink_send_packet_192_168_1_150
+- id: '154981850620'
+  alias: Humidifier Up
+  trigger:
+  - event_data:
+      event: 2002
+      id: rwl021_48
+    event_type: deconz_event
+    platform: event
+  condition: []
+  action:
+  - data:
+      packet: JgBYAAABK5QUERQSERQTEhQSETkUEREVEzcROhM4EjgRORQSETkUNxMSFDcTEhM4ExITEhEVEhMTOBISEzkRExQ3EToRORM4EwAFKwABK0oTAAx0AAEpSxQADQU=
+    service: switch.broadlink_send_packet_192_168_1_150
+- id: '1549818506621'
+  alias: Humidifier Speed
+  trigger:
+  - event_data:
+      event: 4002
+      id: rwl021_48
+    event_type: deconz_event
+    platform: event
+  condition: []
+  action:
+  - data:
+      packet: JgBYAAABKZcSExITERURExMTETkSFBEUEjkRORI5EjgROhEUEjkROhETEzgSExM4EjkRFBIUERMSORITEjkRFBIUEjgRORM4EQAFLgABKUsSAAx1AAEoTBMADQU=
+    service: switch.broadlink_send_packet_192_168_1_150
+- id: '1549818506622'
+  alias: Humidifier Timer
+  trigger:
+  - event_data:
+      event: 2003
+      id: rwl021_48
+    event_type: deconz_event
+    platform: event
+  condition: []
+  action:
+  - data:
+      packet: JgBYAAABKZYSFBITERQRFREUETkTEhEVETkROhI5ETkRORMTEjgSORE6EBURFRI4EjgRFRITEhMRFRE5ETkSFBEVETkRORM4EgAFLAABKksSAAx0AAEpTBIADQU=
+    service: switch.broadlink_send_packet_192_168_1_150
+- id: '1549818506623'
+  alias: Humidifier Mode
+  trigger:
+  - event_data:
+      event: 3003
+      id: rwl021_48
+    event_type: deconz_event
+    platform: event
+  condition: []
+  action:
+  - data:
+      packet: JgBYAAABK5QUERQSEhMTEhQREzgUERMTEzcTNxU2FDcTNxQSEjgUNxM3ExMTEhQ3ExIUERMTExEUEhM3FDcUERQ3FDYTOBQ3EwAFKwABK0kVAAxyAAErShQADQU= 
+    service: switch.broadlink_send_packet_192_168_1_150

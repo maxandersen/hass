@@ -94,6 +94,13 @@ views:
           - entity: light.office_light
             tap_action:
               action: toggle
+      - type: glance
+        title: Guestroom
+        show_name: false
+        entities:
+          - entity: light.guestroom_light
+            tap_action:
+              action: toggle
 
   - title: Lights
     cards:

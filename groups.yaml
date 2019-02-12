@@ -1,5 +1,5 @@
-kitchen_lights:
-  name: Kitchen Lights
+kitchen_center_lights:
+  name: Kitchen Center Lights
   entities:
     - light.kitchen_light_1
     - light.kitchen_light_2
@@ -13,6 +13,14 @@ kitchen_table_lights:
   entities:
     - light.kitchen_table_light_1
     - light.kitchen_table_light_2
+    - light.kitchen_cupboard_light_1
+    - light.kitchen_cupboard_light_2
+
+kitchen_lights:
+  name: Kitchen Lights
+  entities:
+    - group.kitchen_center_lights
+    - group.kitchen_table_lights
 
 basement_lights:
   name: Basement Lights
@@ -38,6 +46,7 @@ dinner_table_lights:
     - light.dinner_table_light_4
     - light.dinner_table_light_5
     - light.dinner_table_light_6
+    - light.dinner_table_cupboard_light
 
 winter_garden_lights:
   name: Winter Garden Lights

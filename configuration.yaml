@@ -1,3 +1,4 @@
+
 homeassistant:
   # Name of the location where Home Assistant is running
   name: Andersens
@@ -33,11 +34,52 @@ frontend:
 # Example using a delay after start of Home Assistant
 homekit:
   auto_start: True
+  filter: &cloudfilters
+    exclude_domains:
+      - script
+      - automation
+    exclude_entities:
+      - switch.fluxer
+      - light.hallway_light_3
+      - light.hallway_light_5
+      - light.hallway_light_2
+      - light.hallway_light_1
+      - light.hallway_light_4
+      - light.kitchen_light_2
+      - light.kitchen_table_light_2
+      - light.kitchen_light_4
+      - light.kitchen_light_5
+      - light.kitchen_table_light_1
+      - light.kitchen_light_1
+      - light.kitchen_light_6
+      - light.kitchen_cupboard_light_2
+      - light.kitchen_cupboard_light_1
+      - light.kitchen_light_3
+      - light.winter_garden_light_1
+      - light.winter_garden_light_2
+      - light.winter_garden_light_4
+      - light.winter_garden_light_3
+      - light.winter_garden_light_5
+      - light.basement_light_4
+      - light.basement_light_1
+      - light.basement_light_stairs
+      - light.basement_light_3
+      - light.basement_light_9
+      - light.basement_light_10
+      - light.basement_light_8
+      - light.basement_light_2
+      - light.basement_light_7
+      - light.basement_light_6
+      - light.basement_light_5
 
 vacuum:
   - platform: xiaomi_miio
     host: 192.168.1.107
     token: !secret rockrobo-token
+
+media_player:
+  - platform: ps4
+    host: 192.168.1.160
 
 # Enables configuration UI
 config:
@@ -62,6 +104,8 @@ ios:
 updater:
   # Optional, allows Home Assistant developers to focus on popular components.
   include_used_components: true
+
+system_health:
 
 # Discover some devices automatically
 discovery:
@@ -89,25 +133,71 @@ sun:
 
 # Weather prediction
 sensor:
+  - platform: uptime
+    name: uptime
+    unit_of_measurement: hours
   - platform: yr
   - platform: ring
   - platform: aftership
+    name: account1
+    api_key: !secret aftership-api_key
+  - platform: aftership
+    name: account2
     api_key: !secret aftership-api_key
   - platform: seventeentrack
     username: !secret seventeentrack-username
     password: !secret seventeentrack-password
-
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /config
+      - type: memory_use_percent
+      - type: swap_use_percent
+      - type: load_1m
+      - type: processor_use
+      - type: last_boot
+      - type: network_in
+      - type: network_out
 
 switch:
+  - platform: flux
+    name: fluxer
+    mode: mired
+    lights:
+      - group.kitchen_lights
+      - group.dinner_table_lights
+      - group.hallway_lights
+      - group.kitchen_table_lights
+      - light.dinner_table_wall_light
   - platform: broadlink
     host: !secret broadlink-host
     mac: !secret broadlink-mac
     timeout: 15
     switches:
       humidifier:
-        friendly_name: "Bedroom humidifer"
+        friendly_name: "Bedroom humidifer on"
         command_on: 'JgBQAAABLJQUEREVExIUEREVEzcRFRMRFDcUNxA6FDcTNxEVEzcRORQSETkUEhEUFBEUEhEUFBEUNxMSFDcTNxE6FDcTNxE4FQAFKgABLEkTAA0FAAAAAAAAAAA='
         command_off: 'JgBQAAABLJQUEREVExIUEREVEzcRFRMRFDcUNxA6FDcTNxEVEzcRORQSETkUEhEUFBEUEhEUFBEUNxMSFDcTNxE6FDcTNxE4FQAFKgABLEkTAA0FAAAAAAAAAAA='
+      humidifier_down:
+        friendly_name: "Bedroom humidifier down"
+        command_on: 'JgBYAAABKpUUERMTERQTEhQSEDoUEhAVEzcROhM4EzcRORQSETkUNxQ3EBUTEhQREToUEREVExIUERE5FDcUNxEUFDcRORQ3EwAFKwABK0oUAAxyAAEsSRQADQU='
+        command_off: 'JgBYAAABKpUUERMTERQTEhQSEDoUEhAVEzcROhM4EzcRORQSETkUNxQ3EBUTEhQREToUEREVExIUERE5FDcUNxEUFDcRORQ3EwAFKwABK0oUAAxyAAEsSRQADQU='
+      humidifier_up:
+        friendly_name: "Bedroom humidifier up"
+        command_on: 'JgBYAAABK5QUERQSERQTEhQSETkUEREVEzcROhM4EjgRORQSETkUNxMSFDcTEhM4ExITEhEVEhMTOBISEzkRExQ3EToRORM4EwAFKwABK0oTAAx0AAEpSxQADQU='
+        command_off: 'JgBYAAABK5QUERQSERQTEhQSETkUEREVEzcROhM4EjgRORQSETkUNxMSFDcTEhM4ExITEhEVEhMTOBISEzkRExQ3EToRORM4EwAFKwABK0oTAAx0AAEpSxQADQU='
+      humidifier_speed:
+        friendly_name: "Bedroom humidifier Speed"
+        command_on:  'JgBYAAABKZcSExITERURExMTETkSFBEUEjkRORI5EjgROhEUEjkROhETEzgSExM4EjkRFBIUERMSORITEjkRFBIUEjgRORM4EQAFLgABKUsSAAx1AAEoTBMADQU='
+        command_off: 'JgBYAAABKZcSExITERURExMTETkSFBEUEjkRORI5EjgROhEUEjkROhETEzgSExM4EjkRFBIUERMSORITEjkRFBIUEjgRORM4EQAFLgABKUsSAAx1AAEoTBMADQU='
+      humidifier_timer:
+        friendly_name: "Bedroom humidifier Timer"
+        command_on:  'JgBYAAABKZYSFBITERQRFREUETkTEhEVETkROhI5ETkRORMTEjgSORE6EBURFRI4EjgRFRITEhMRFRE5ETkSFBEVETkRORM4EgAFLAABKksSAAx0AAEpTBIADQU='
+        command_off: 'JgBYAAABKZYSFBITERQRFREUETkTEhEVETkROhI5ETkRORMTEjgSORE6EBURFRI4EjgRFRITEhMRFRE5ETkSFBEVETkRORM4EgAFLAABKksSAAx0AAEpTBIADQU='
+      humidifier_mode:
+        friendly_name: "Bedroom humidifier Mode"
+        command_on:  'JgBYAAABK5QUERQSEhMTEhQREzgUERMTEzcTNxU2FDcTNxQSEjgUNxM3ExMTEhQ3ExIUERMTExEUEhM3FDcUERQ3FDYTOBQ3EwAFKwABK0kVAAxyAAErShQADQU='
+        command_off: 'JgBYAAABK5QUERQSEhMTEhQREzgUERMTEzcTNxU2FDcTNxQSEjgUNxM3ExMTEhQ3ExIUERMTExEUEhM3FDcUERQ3FDYTOBQ3EwAFKwABK0kVAAxyAAErShQADQU='
       sony_tv:
         friendly_name: "Bedroom TV"
         command_on: 'JgCMAFESKRIWEikSFhIpEhYSFRIqEhUSFhIVExUAA1FREikTFRIpExUSKRMVEhYSKRIWEhUTFRIWAANRURIpEhYSKRIWEikSFhIVEioSFRMVEhUTFQADU1ESKRIWEikSFhIpEhYSFRMpEhUTFRIVExUAA1NREikSFhIpEhYSKRIWEhUSKhIVEhYSFRMVAA0FAAAAAAAAAAAAAAAA'
@@ -119,6 +209,9 @@ tts:
 
 # Cloud
 cloud:
+  alexa:
+    filter:
+      <<: *cloudfilters
 
 device_tracker:
   - platform: swisscom
@@ -170,7 +263,11 @@ shell_command:
 
 lovelace:
   mode: yaml
-  
+
+recorder:
+  db_url: !secret db_url
+
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
