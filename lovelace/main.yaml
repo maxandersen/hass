@@ -1,22 +1,14 @@
 title: Andersens Home
 
-{% set plugins = [
-  '/local/lovelace/monster-card.js',
-  '/local/lovelace/timer-card.js',
-  '/local/lovelace/plan-coordinates.js',
-  ] %}
-
-# Copy resources from anywhere to www/lovelace and include them
 resources:
-  {% for p in plugins %}
-  - url: !file {{ p }}
+  - url: /local/lovelace/monster-card.js?1546942517.520332
     type: js
-  {% endfor %}
+  - url: /local/lovelace/timer-card.js?1546942517.5204139
+    type: js
+  - url: /local/lovelace/plan-coordinates.js?1546942517.520467
+    type: js
+
 views:
-  - title: Overview
-    panel: true
-    cards:
-      !include floorplan.yaml
   - title: Rooms
     cards:
       - type: glance

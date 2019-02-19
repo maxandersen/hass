@@ -14,7 +14,13 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   packages: !include_dir_named packages
-
+  customize_glob:
+    "group.*lights":
+      custom_ui_state_card: state-card-custom-ui
+      icon: mdi:lightbulb
+      templates:
+        icon: "if (state === 'on') return 'mdi:lightbulb'; else return 'mdi:power-standby';"
+        icon_color: "if (state === 'on') return 'rgb(239, 239, 0)'; else return 'rgb(3, 169, 244)';"
 zone:
   - name: School
     latitude: !secret school-latitude
@@ -30,6 +36,17 @@ zone:
 
 # Enables the frontend
 frontend:
+
+panel_iframe:
+  terminal:
+    title: Terminal
+    icon: mdi:console
+    url: https://hassio.local:7681
+  ide:
+    title: IDE
+    icon: mdi:code-braces
+    url: https://hassio.local:8321
+
 
 # Example using a delay after start of Home Assistant
 homekit:
@@ -246,14 +263,17 @@ lock:
     token: !secret nuki-token
 
 camera:
-   - platform: ring
-   - platform: mjpeg
-     name: babymonitor
-     mjpeg_url: !secret baby-mjpeg_url
-     still_image_url: !secret baby-still_image_url
+  - platform: ring
+  - platform: mjpeg
+    name: babymonitor
+    mjpeg_url: !secret baby-mjpeg_url
+    still_image_url: !secret baby-still_image_url
+#  - platform: synology
+#    url: !secret synology_url
+#    username: !secret synology_username 
+#    password: !secret synology_password
+#    verify_ssl: false
 
-shell_command:
-  lovelace_gen: 'python /config/lovelace-gen.py'
 
   # logger:
   #   default: info
@@ -261,12 +281,12 @@ shell_command:
   #     pydeconz: debug
   #     homeassistant.components.deconz: debug
 
+
 lovelace:
   mode: yaml
 
 recorder:
   db_url: !secret db_url
-
 
 group: !include groups.yaml
 automation: !include automations.yaml

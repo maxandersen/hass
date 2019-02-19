@@ -1,74 +1,216 @@
-{% set shared = """
-          state_filter:
-            \"off\": opacity(50%)
-            \"on\": opacity(1%)
-            \"unknown\": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
-          tap_action:
-            action: toggle
-""" %}
 - type: vertical-stack
+  x-state_filter: &shared
+    state_filter:
+      "off": opacity(30%)
+      "on": opacity(1%) 
+      "unknown":  opacity(72%) invert(29%) sepia(50%) saturate(10000%) hue-rotate(51deg)
+      "unavailable": opacity(50%) invert(10%) sepia(99%) saturate(10000%) hue-rotate(0deg)
+    tap_action:
+      action: toggle
+  x-label-style: &labelstyle
+    font-weight: bold
+    color: white
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
+
   cards:
-    - type: custom:plan-coordinates
-    - type: picture-elements
-      image: !file /local/floorplan/groundfloor.png
-      style:
-        left: 0%
-        top: 0%
-        transform: none
-      elements:
+  - type: picture-elements
+    image: /local/floorplan/upperfloor.png
+    elements:
+        - type: state-icon
+          entity: binary_sensor.openclose_bedroom_door
+          style:
+            left: 61%
+            top: 20%
+        - type: state-icon
+          entity: media_player.bedroom
+          style:
+            left: 40%
+            top: 42%
+
+  - type: picture-elements
+    image: /local/floorplan/groundfloor.png
+    elements:
         - type: image
           entity: light.dinner_table_wall_light
-          image: !file /local/floorplan/dark_dinner_wall.png
+          image: /local/floorplan/dark_dinner_wall.png
           style:
-            left: 37%
-            top: 40%
-            transform: none
-          {{ shared }}
+            left: 44%
+            top: 42%
+            width: 16.32%
+          <<: *shared
+
         - type: image
           entity: group.kitchen_lights
-          image: !file /local/floorplan/dark_kitchen.png
+          image: /local/floorplan/dark_kitchen.png
           style:
-            left: 60%
-            top: 8%
-            transform: none
-          {{ shared }}
+            left: 69%
+            top: 21%
+            width: 16.9%
+          <<: *shared
+
         - type: image
           entity: group.dinner_table_lights
-          image: !file /local/floorplan/dark_dinner_table.png
+          image: /local/floorplan/dark_dinner_table.png
           style:
-            left: 37%
-            top: 8%
-            transform: none
-          {{ shared }}
-        - type: image
-          entity: group.winter_garden_lights
-          image: !file /local/floorplan/dark_winter_garden.png
-          style: 
-            left: 23%
-            top: 8%
-            transform: none
-          {{ shared }}
-        - type: image
-          entity: group.hallway_lights
-          image: !file /local/floorplan/dark_hallway.png
-          style:
-            left: 50%
-            top: 55%
-            transform: none
-          {{ shared }}
-        - type: image
-          entity: light.small_bathroom_light
-          image: !file /local/floorplan/dark_small_bathroom.png
-          style:
-            left: 84%
-            top: 89%
-            transform: none
-          {{ shared }}
+            left: 48%
+            top: 24%
+            width: 25.23%
+          <<: *shared
+
         - type: image
           entity: group.entrance_lights
-          image: !file /local/floorplan/dark_entrance.png
+          image: /local/floorplan/dark_entrance.png
           style:
-            left: 62%
-            top: 35%
-            transform: none
-          {{ shared }}
+            left: 70%
+            top: 56%
+            width: 16.25%
+          <<: *shared
+
+
+        - type: image
+          id: 425
+          entity: group.winter_garden_lights
+          image: /local/floorplan/dark_winter_garden.png
+          style:
+            left: 29%
+            top: 25%
+            width: 13.98%
+          <<: *shared
+
+        - type: image
+          entity: group.hallway_lights
+          image: /local/floorplan/dark_hallway.png
+          style:
+            left: 56%
+            top: 71%
+            width: 12.96%
+          <<: *shared
+
+        - type: image
+          entity: light.small_bathroom_light
+          image: /local/floorplan/dark_small_bathroom.png
+          style:
+            left: 70.5%
+            top: 84%
+            width: 16.09%
+          <<: *shared
+
+        - type: state-label
+          entity: sensor.temperature_small_bathroom
+          style:
+            top: 85.5%
+            left: 75%
+            <<: *labelstyle
+        - type: state-icon
+          entity: binary_sensor.presence_small_bathroom
+          style:
+            top: 82.5%
+            left: 68%
+      
+        - type: state-label
+          entity: sensor.temperature_kitchen
+          style:
+            top: 22.5%
+            left: 74%
+            <<: *labelstyle
+
+        - type: state-icon
+          entity: binary_sensor.presence_kitchen
+          style:
+            top: 20.5%
+            left: 64%
+      
+        - type: state-icon
+          entity: binary_sensor.presence_livingroom
+          style:
+            top: 65.5%
+            left: 36%
+        - type: state-label
+          entity: sensor.temperature_livingroom
+          style:
+            top: 73.5%
+            left: 45%
+            <<: *labelstyle
+        
+        - type: state-icon
+          entity: binary_sensor.presence_hallway
+          style:
+            top: 69.5%
+            left: 55%
+        - type: state-label
+          entity: sensor.temperature_hallway
+          style:
+            top: 77.5%
+            left: 54%
+            <<: *labelstyle
+      
+        - type: state-icon
+          entity: binary_sensor.presence_winter_garden
+          style:
+            top: 29.5%
+            left: 29%
+        - type: state-label
+          entity: sensor.temperature_winter_garden
+          style:
+            top: 29.5%
+            left: 32%
+            <<: *labelstyle
+      
+        - type: state-icon
+          entity: binary_sensor.presence_dinner_table
+          style:
+            top: 27%
+            left: 49%
+        - type: state-label
+          entity: sensor.temperature_dinner_table
+          style:
+            top: 32.5%
+            left: 50%
+            <<: *labelstyle
+
+
+        - type: state-icon
+          entity: binary_sensor.openclose_basement_door
+          style:
+            top: 57.5%
+            left: 57%
+
+        
+        - type: state-icon
+          entity: binary_sensor.openclose_kitchen_terrace_door
+          style:
+            top: 6.5%
+            left: 55%
+       
+
+        - type: state-icon
+          entity: binary_sensor.openclose_38
+          style:
+            top: 88.5%
+            left: 57%
+      
+        - type: state-icon
+          entity: binary_sensor.openclose_42
+          style:
+            top: 26.5%
+            left: 23%
+
+        - type: state-icon
+          entity: binary_sensor.openclose_37
+          style:
+            top: 52.5%
+            left: 50%
+
+        - type: state-icon
+          entity: camera.dinner_table
+          style:
+            top: 13%
+            left: 38%
+
+        - type: state-icon
+          entity: camera.livingroom
+          style:
+            top: 85%
+            left: 29%
+
+
